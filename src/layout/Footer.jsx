@@ -1,7 +1,7 @@
 const Footer = () => {
     return(
         <footer>
-            <p>MoneyKiwi &copy; 2025</p>
+            <p>&copy;MoneyKiwi {new Date().getFullYear()}</p>
         </footer>
     )
 }
