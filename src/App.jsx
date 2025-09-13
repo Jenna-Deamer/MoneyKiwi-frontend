@@ -8,26 +8,33 @@ import LoginPage from './features/auth/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 import AuthProvider from './features/auth/AuthProvider';
+import PrivateRoute from './features/auth/PrivateRoute';
+import PublicRoute from './features/auth/PublicRoute';
 
 function App() {
     return (
         <>
-      
             <Router>
-            <AuthProvider>
-                <Routes>
-                    <Route path="/" element={<TransactionsPage />} />
-                    <Route path="/transactions" element={<TransactionsPage />} />
-                    <Route path="/dashboard" element={<DashboardPage />} />
-                    <Route path="/categories" element={<CategoryManagementPage />} />
-                    <Route path="/accounts" element={<AccountsPage />} />
-                    <Route path='/register' element={<RegisterPage />} />
-                    <Route path='/login' element={<LoginPage />} />
+                <AuthProvider>
                     <Route path="*" element={<NotFoundPage />} />
-                </Routes>
-                  </AuthProvider>
+
+                    <Routes>
+                        <Route element={<PublicRoute />}>
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/register" element={<RegisterPage />} />
+                        </Route>
+                        <Route element={<PrivateRoute />}>
+                            <Route path="/" element={<TransactionsPage />} />
+                            <Route path="/transactions" element={<TransactionsPage />} />
+                            <Route path="/dashboard" element={<DashboardPage />} />
+                            <Route path="/categories" element={<CategoryManagementPage />} />
+                            <Route path="/accounts" element={<AccountsPage />} />
+                        </Route>
+
+                    </Routes>
+                </AuthProvider>
             </Router>
-          
+
         </>
     )
 }

@@ -52,11 +52,19 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    const logOutAction = () => {
+    const logOutAction = async () => {
+        try {
+            await fetch(`${API_URL}/auth/logout`, {
+                method: "POST",
+                credentials: "include"
+            });
+        } catch (err) {
+            console.error(err);
+        }
         setUser(null);
-        localStorage.removeItem("site");
         navigate("/login");
     };
+
 
     return (
         <AuthContext.Provider value={{ user, loginAction, signUpAction, logOutAction, error }}>
