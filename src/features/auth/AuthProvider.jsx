@@ -9,13 +9,27 @@ const AuthProvider = ({ children }) => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+    const getCurrentUser = async () => {
+        try {
+            const response = await fetch(`${API_URL}/auth/me`, {
+                method: "GET",
+                credentials: "include"
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setUser(data.user);
+            } else {
+                setUser(null);
+            }
+        } catch (err) {
+            console.error(err);
+            setUser(null);
+        }
+    };
+
     // check if user status on mount
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
-        setLoading(false);
+        getCurrentUser().then(() => setLoading(false));
     }, []);
 
     const loginAction = async (email, password) => {
@@ -31,7 +45,6 @@ const AuthProvider = ({ children }) => {
             const data = await response.json();
             if (response.ok) {
                 setUser(data.user);
-                localStorage.setItem('user', JSON.stringify(data.user));
                 navigate("/dashboard");
                 console.log(data.message)
                 console.log(data.user)
@@ -65,16 +78,22 @@ const AuthProvider = ({ children }) => {
 
     const logOutAction = async () => {
         try {
-            await fetch(`${API_URL}/auth/logout`, {
+            const response = await fetch(`${API_URL}/auth/logout`, {
                 method: "POST",
                 credentials: "include"
             });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log(data.message);
+                setUser(null);
+                navigate("/login");
+            } else {
+                console.error('Logout failed:', response.status);
+            }
         } catch (err) {
             console.error(err);
         }
-        setUser(null);
-        localStorage.removeItem('user');
-        navigate("/login");
     };
 
 
