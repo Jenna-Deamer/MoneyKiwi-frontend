@@ -1,7 +1,7 @@
-import { useContext, createContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './authContext';
 const API_URL = import.meta.env.VITE_BACKEND_API_URL;
-const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -86,7 +86,3 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
-
-export const useAuth = () => {
-    return useContext(AuthContext);
-};
