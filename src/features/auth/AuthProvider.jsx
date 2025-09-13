@@ -1,12 +1,22 @@
-import { useContext, createContext, useState } from 'react';
+import { useContext, createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const navigate = useNavigate();
+
+    // check if user status on mount
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+        setLoading(false);
+    }, []);
 
     const loginAction = async (email, password) => {
         setError("");
@@ -21,6 +31,7 @@ const AuthProvider = ({ children }) => {
             const data = await response.json();
             if (response.ok) {
                 setUser(data.user);
+                localStorage.setItem('user', JSON.stringify(data.user));
                 navigate("/dashboard");
                 console.log(data.message)
                 console.log(data.user)
@@ -62,12 +73,13 @@ const AuthProvider = ({ children }) => {
             console.error(err);
         }
         setUser(null);
+        localStorage.removeItem('user');
         navigate("/login");
     };
 
 
     return (
-        <AuthContext.Provider value={{ user, loginAction, signUpAction, logOutAction, error }}>
+        <AuthContext.Provider value={{ user, loading, loginAction, signUpAction, logOutAction, error }}>
             {children}
         </AuthContext.Provider>
     );
