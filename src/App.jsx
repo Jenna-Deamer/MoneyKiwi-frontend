@@ -4,6 +4,7 @@ import TransactionsPage from './features/transactions/TransactionsPage';
 import CategoryManagementPage from './features/categories/CategoryManagementPage';
 import AccountsPage from './features/accounts/AccountsPage';
 import RegisterPage from './features/auth/RegisterPage';
+import LoginPage from './features/auth/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
                     <Route path="/dashboard" element={<DashboardPage />} />
                     <Route path="/categories" element={<CategoryManagementPage />} />
                     <Route path="/accounts" element={<AccountsPage />} />
-                    <Route path='register' element={<RegisterPage/>} />
+                    <Route path='/register' element={<RegisterPage />} />
+                    <Route path='/login' element={<LoginPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Router>
