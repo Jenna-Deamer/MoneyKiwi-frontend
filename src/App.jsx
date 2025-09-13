@@ -7,10 +7,14 @@ import RegisterPage from './features/auth/RegisterPage';
 import LoginPage from './features/auth/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 
+import AuthProvider from './features/auth/AuthProvider';
+
 function App() {
     return (
         <>
+      
             <Router>
+            <AuthProvider>
                 <Routes>
                     <Route path="/" element={<TransactionsPage />} />
                     <Route path="/transactions" element={<TransactionsPage />} />
@@ -21,7 +25,9 @@ function App() {
                     <Route path='/login' element={<LoginPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
+                  </AuthProvider>
             </Router>
+          
         </>
     )
 }

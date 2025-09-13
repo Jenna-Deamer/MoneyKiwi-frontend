@@ -1,39 +1,15 @@
 import { useState } from "react";
-const API_URL = import.meta.env.VITE_BACKEND_API_URL;
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthProvider.jsx";
 
 function LoginPage() {
-      const navigate = useNavigate();
-
+    const { loginAction, error } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError("");
-
-        try {
-            const response = await fetch(`${API_URL}/auth/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-                 credentials: "include"
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                console.log(data.message);
-                 console.log('User:', data.user)
-                 navigate("/dashboard");
-            } else {
-                setError(data.message || "Login failed");
-            }
-        } catch (err) {
-            console.error(err);
-            setError("An error occurred. Please try again.");
-        }
-    }
+        await loginAction(email, password);
+    };
 
     return (
         <div>
@@ -65,11 +41,8 @@ function LoginPage() {
                 {error && <p style={{ color: "red" }}>{error}</p>}
                 <button type="submit">Login</button>
             </form>
-
         </div>
     );
-
 }
-
 
 export default LoginPage;

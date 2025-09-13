@@ -1,33 +1,16 @@
 import { useState } from "react";
-const API_URL = import.meta.env.VITE_BACKEND_API_URL; 
+import { useAuth } from "./AuthProvider.jsx";
+
 
 function RegisterPage() {
+    const { signUpAction, error } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-
+  
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError("");
-
-        try {
-             const response = await fetch(`${API_URL}/auth/register`, { 
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                console.log('Account created')
-            } else {
-                setError(data.message || "Registration failed");
-            }
-        } catch (err) {
-            console.error(err);
-            setError("An error occurred. Please try again.");
-        }
-    }
+        await signUpAction(email, password);
+     };
 
     return (
         <div>
