@@ -16,27 +16,28 @@ function App() {
         <>
             <Router>
                 <AuthProvider>
-                    <Route path="*" element={<NotFoundPage />} />
 
-                    <Routes>
-                        <Route element={<PublicRoute />}>
-                            <Route path="/login" element={<LoginPage />} />
-                            <Route path="/register" element={<RegisterPage />} />
-                        </Route>
-                        <Route element={<PrivateRoute />}>
-                            <Route path="/" element={<TransactionsPage />} />
-                            <Route path="/transactions" element={<TransactionsPage />} />
-                            <Route path="/dashboard" element={<DashboardPage />} />
-                            <Route path="/categories" element={<CategoryManagementPage />} />
-                            <Route path="/accounts" element={<AccountsPage />} />
-                        </Route>
+                     <Routes>
+                         <Route element={<PublicRoute />}>
+                             <Route path="/login" element={<LoginPage />} />
+                             <Route path="/register" element={<RegisterPage />} />
+                         </Route>
+                         <Route element={<PrivateRoute />}>
+                             <Route path="/" element={<TransactionsPage />} />
+                             <Route path="/transactions" element={<TransactionsPage />} />
+                             <Route path="/dashboard" element={<DashboardPage />} />
+                             <Route path="/categories" element={<CategoryManagementPage />} />
+                             <Route path="/accounts" element={<AccountsPage />} />
+                         </Route>
 
-                    </Routes>
-                </AuthProvider>
-            </Router>
+                        <Route path="*" element={<NotFoundPage />} />
 
-        </>
-    )
+                     </Routes>
+                 </AuthProvider>
+             </Router>
+
+         </>
+     )
 }
 
 export default App
