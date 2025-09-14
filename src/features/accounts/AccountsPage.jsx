@@ -1,15 +1,10 @@
-import { useAccountContext } from './useAccountContext';
+import { useAccounts } from './useAccounts';
 
 function AccountsPage() {
-    const { accounts, loading, error } = useAccountContext();
+    const { data: accounts, isLoading, isError, error } = useAccounts(); 
 
-    if (loading) {
-        return <div>Loading accounts...</div>;
-    }
-
-    if (error) {
-        return <div>Error loading accounts: {error.message}</div>;
-    }
+    if (isLoading) return <div>Loading accounts...</div>;
+    if (isError) return <div>Error: {error.message}</div>;
 
     return (
         <div>
