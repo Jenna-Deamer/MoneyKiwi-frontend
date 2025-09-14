@@ -9,6 +9,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 import MainLayout from './layout/MainLayout';
 
+import AccountProvider from './features/accounts/AccountProvider';
 import AuthProvider from './features/auth/AuthProvider';
 import PrivateRoute from './features/auth/PrivateRoute';
 import PublicRoute from './features/auth/PublicRoute';
@@ -18,7 +19,7 @@ function App() {
         <>
             <Router>
                 <AuthProvider>
-
+                    <AccountProvider>
                     <Routes>
                         <Route element={<PublicRoute />}>
                             <Route path="/login" element={<LoginPage />} />
@@ -37,7 +38,9 @@ function App() {
                         <Route path="*" element={<NotFoundPage />} />
 
                     </Routes>
-                </AuthProvider>
+                    </AccountProvider>
+                </AuthProvider>   
+
             </Router>
 
         </>
