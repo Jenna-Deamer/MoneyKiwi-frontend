@@ -6,6 +6,7 @@ export async function fetchAccounts() {
 	});
 	if (!response.ok) throw new Error('Failed to fetch accounts');
 	const data = await response.json();
+    console.log(data.data)
 	return data.data;
 }
 

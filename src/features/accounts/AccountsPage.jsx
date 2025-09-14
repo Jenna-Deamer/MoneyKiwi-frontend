@@ -23,7 +23,13 @@ function AccountsPage() {
             <div className='mt-4'>
                 {accounts && accounts.length > 0 ? (
                     accounts.map((account) => (
-                        <p key={account.id}>{account.name}</p>
+                        <div>
+                            <p key={account.id}>{account.name}</p>
+                            <p>{account.account_type}</p>
+                            <p>{account.registration_type}</p>
+                            <p>{account.institution}</p>
+                            <p>{account.description}</p>
+                        </div>
                     ))
                 ) : (
                     <div>
